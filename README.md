@@ -1,18 +1,22 @@
-# Salesforce DX Project: Next Steps
+CaseHierarchyController
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+Overview
+The CaseHierarchyController class is designed to interact with Salesforce Case objects to retrieve and organize cases into hierarchical relationships. This Apex class is particularly useful for Salesforce Lightning components where there is a need to display parent cases and their associated child cases efficiently.
 
-## How Do You Plan to Deploy Your Changes?
+Features
+Retrieve Hierarchical Case Data: Fetches parent cases along with their child cases as a structured list.
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+AuraEnabled Method: Exposes the main method for use in Lightning components, supporting efficient client-side caching.
 
-## Configure Your Salesforce DX Project
+Usage
+The class is used within Salesforce Lightning components to display a case hierarchy based on a specified parent case ID. It provides a seamless integration point for developers to fetch and display case data in a hierarchical structure without additional processing on the client side.
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+Methods
+@AuraEnabled(cacheable=true)
+public static List<CaseWithChildCases> getAllParentCasesWithChildCases(String parentId)
 
-## Read All About It
+Description: Retrieves a list of CaseWithChildCases objects, each representing a parent case and its related child cases. The method uses a recursive strategy to gather all child cases associated with the given parent case ID.
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+Parameters:
+String parentId: The Salesforce ID of the parent case.
+Returns: A list of CaseWithChildCases objects, where each object includes comprehensive details about the case and its children.
