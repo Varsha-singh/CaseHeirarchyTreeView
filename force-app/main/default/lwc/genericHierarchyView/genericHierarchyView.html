@@ -1,0 +1,13 @@
+<template>
+    <template lwc:if={processing}>
+       <lightning-spinner alternative-text="Loading"></lightning-spinner>
+    </template>
+    <div class="slds-p-around_medium">
+        <lightning-tree-grid
+                hide-checkbox-column
+                data={caseData}
+                columns={columns}
+                key-field="id">
+        </lightning-tree-grid>    
+    </div>
+</template>
