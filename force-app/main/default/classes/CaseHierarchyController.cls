@@ -17,16 +17,15 @@ public with sharing class CaseHierarchyController {
 @AuraEnabled(cacheable=true)
 public static List<CaseWithChildCases> getAllParentCasesWithChildCases(String parentId) {
     try {
-    Case parentCase = [SELECT Id, CaseNumber,Subject,Origin FROM Case WHERE Id = :parentId];
     
-    if (parentCase == null) {
-        throw new AuraHandledException('No parent case found with the provided ID.');
+    if (parentId == null) {
+        throw new AuraHandledException('No case id found with the provided ID.');
     }
 
     Map<Id, List<Case>> caseChild = new Map<Id, List<Case>>(); // Map to store the child case information for each case
-    caseChild.put(parentCase.Id, new List<Case>()); // Recursively traverse the hierarchy to get all child cases
+    caseChild.put(parentId, new List<Case>()); // Recursively traverse the hierarchy to get all child cases
     
-    getChildCases(parentCase.Id, caseChild);
+    getChildCases(parentId, caseChild);
     Map<Id,Case> allCaseMap =new Map<Id,Case> ([SELECT Id, CaseNumber,Subject,Origin, ParentId, (SELECT Id, CaseNumber,Subject,Origin FROM Cases ) FROM Case WHERE Id IN: caseChild.keySet()]);
     
     List<CaseWithChildCases> caseChildCases = new List<CaseWithChildCases>();
