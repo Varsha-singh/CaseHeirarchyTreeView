@@ -2,8 +2,15 @@
     <template lwc:if={processing}>
         <lightning-spinner alternative-text="Loading"></lightning-spinner>
     </template>
+    <div class="slds-m-bottom_small slds-m-right_medium">
+        <lightning-button label="Collapse All" onclick={clickToCollapseAll} class="slds-m-right_medium">
+        </lightning-button>
+        <lightning-button label="Get Expanded" onclick={clickToExpandAll}>
+        </lightning-button>
+    </div>
+
     <div class="slds-p-around_medium">
-        <lightning-tree-grid hide-checkbox-column data={caseData} columns={columns} key-field="id">
+        <lightning-tree-grid hide-checkbox-column data={caseData}  columns={columns} key-field="id">
         </lightning-tree-grid>
     </div>
 </template>

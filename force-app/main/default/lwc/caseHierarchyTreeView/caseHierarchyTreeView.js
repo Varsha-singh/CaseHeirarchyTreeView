@@ -1,4 +1,4 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, wire ,track} from 'lwc';
 import getCaseDetails from '@salesforce/apex/CaseHierarchyController.getAllParentCasesWithChildCases';
 import { NavigationMixin } from 'lightning/navigation';
 
@@ -21,12 +21,12 @@ export default class CaseHierarchy extends NavigationMixin(LightningElement) {
     columns = columns;
     processing = true;
 
+    
     @wire(getCaseDetails, { parentId: '$recordId' })
     wiredCases({ data, error }) {
         if (data) {
             let caseHierarchy = {};
             let rootCases = [];
-
             for (let caseRec of data) {
                 if (caseRec.parentId) {
                     if (caseHierarchy[caseRec.parentId]) {
@@ -71,4 +71,13 @@ export default class CaseHierarchy extends NavigationMixin(LightningElement) {
         return []; // No children found, return empty array
     }
 
+    clickToExpandAll(e) {
+        const grid =  this.template.querySelector('lightning-tree-grid');
+        grid.expandAll();
+    }
+
+    clickToCollapseAll(e) {
+        const grid =  this.template.querySelector('lightning-tree-grid');
+        grid.collapseAll();
+    }
 }
